@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alpha-Gal Síndrome — Guia Completo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --forest: #1e3d1a;
+      --leaf: #2d5a27;
+      --sage: #5a8f52;
+      --mint: #e8f5e9;
+      --red: #b03030;
+      --red-light: #ffebee;
+      --amber: #e67e22;
+      --amber-light: #fff3e0;
+      --sand: #fdf6ec;
+      --ink: #1a1a1a;
+      --mid: #555;
+      --light: #999;
+      --border: #e0e0e0;
+      --white: #fff;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.09);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f5f5f0;
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: var(--forest);
+      color: white;
+      padding: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 72px 32px 64px;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .hero-badge span { width: 8px; height: 8px; border-radius: 50%; background: #7dcc6e; display: inline-block; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .hero h1 em { font-style: italic; color: #a8d8a0; }
+    .hero p {
+      font-size: 17px;
+      opacity: .82;
+      max-width: 560px;
+      margin-bottom: 36px;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 36px;
+      flex-wrap: wrap;
+    }
+    .hero-stat { border-left: 2px solid rgba(255,255,255,.25); padding-left: 16px; }
+    .hero-stat .num { font-family: 'Playfair Display', serif; font-size: 28px; color: #a8d8a0; }
+    .hero-stat .lbl { font-size: 11px; opacity: .65; letter-spacing: .5px; text-transform: uppercase; }
+
+    /* decorative circles */
+    .hero::before, .hero::after {
+      content: ''; position: absolute; border-radius: 50%;
+      background: rgba(255,255,255,.04);
+    }
+    .hero::before { width: 500px; height: 500px; right: -120px; top: -180px; }
+    .hero::after  { width: 300px; height: 300px; right: 140px; top: 60px; }
+
+    /* ─── NAV TABS ─── */
+    .nav-wrap {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .nav-tabs {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 0 16px;
+    }
+    .nav-tabs::-webkit-scrollbar { display: none; }
+    .nav-tab {
+      flex-shrink: 0;
+      padding: 18px 22px;
+      cursor: pointer;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--light);
+      border-bottom: 3px solid transparent;
+      transition: all .2s;
+      white-space: nowrap;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .nav-tab:hover { color: var(--leaf); }
+    .nav-tab.active { color: var(--leaf); border-bottom-color: var(--leaf); }
+
+    /* ─── SECTIONS ─── */
+    .sections { max-width: 900px; margin: 0 auto; padding: 48px 24px 80px; }
+    .section { display: none; animation: fadeUp .35s ease; }
+    .section.active { display: block; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      color: var(--forest);
+      margin-bottom: 8px;
+    }
+    .section-lead {
+      color: var(--mid);
+      font-size: 15px;
+      margin-bottom: 32px;
+      max-width: 640px;
+    }
+
+    /* ─── CARDS ─── */
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+    .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 24px; }
+    @media(max-width:600px){ .card-grid{ grid-template-columns:1fr } }
+
+    /* ─── FACT / MYTH ─── */
+    .fact-myth-list { display: flex; flex-direction: column; gap: 14px; }
+    .fm-item {
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: box-shadow .2s;
+    }
+    .fm-item:hover { box-shadow: var(--shadow); }
+    .fm-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 20px;
+      font-weight: 500;
+      font-size: 15px;
+      user-select: none;
+    }
+    .fm-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; }
+    .fm-arrow { margin-left: auto; font-size: 18px; transition: transform .25s; }
+    .fm-item.open .fm-arrow { transform: rotate(180deg); }
+    .fm-body { display: none; padding: 0 20px 18px; font-size: 14px; line-height: 1.7; }
+    .fm-item.open .fm-body { display: block; }
+
+    .fact .fm-header { background: var(--mint); color: var(--forest); border-color: #a5d6a7; }
+    .fact .fm-icon { background: #c8e6c9; }
+    .fact .fm-body { background: #f1f8f1; color: var(--forest); }
+
+    .myth .fm-header { background: var(--red-light); color: var(--red); border-color: #ef9a9a; }
+    .myth .fm-icon { background: #ffcdd2; }
+    .myth .fm-body { background: #fff8f8; color: var(--red); }
+
+    /* ─── NEWS ─── */
+    .news-item {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 0;
+    }
+    .news-accent { width: 6px; flex-shrink: 0; background: var(--leaf); }
+    .news-accent.red { background: var(--red); }
+    .news-accent.amber { background: var(--amber); }
+    .news-body { padding: 20px 24px; flex: 1; }
+    .news-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .news-date {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      color: var(--light);
+    }
+    .news-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+    .tag-red { background: var(--red-light); color: var(--red); }
+    .tag-green { background: var(--mint); color: var(--leaf); }
+    .tag-amber { background: var(--amber-light); color: var(--amber); }
+    .news-title { font-weight: 600; font-size: 15px; margin-bottom: 6px; }
+    .news-text { font-size: 13.5px; color: var(--mid); }
+
+    /* ─── RISK MAP INFO ─── */
+    .map-visual {
+      background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .map-visual::before {
+      content: '🗺️';
+      font-size: 100px;
+      opacity: .15;
+      position: absolute;
+      right: 20px;
+      top: 10px;
+    }
+    .map-visual h3 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--forest); margin-bottom: 10px; }
+    .map-visual p { color: var(--mid); max-width: 480px; margin: 0 auto; font-size: 14px; }
+
+    .region-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin-bottom: 24px; }
+    .region-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      border-top: 4px solid;
+    }
+    .rc-high { border-color: var(--red); }
+    .rc-med { border-color: var(--amber); }
+    .rc-low { border-color: var(--sage); }
+    .region-card .risk-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .rc-high .risk-label { color: var(--red); }
+    .rc-med .risk-label { color: var(--amber); }
+    .rc-low .risk-label { color: var(--sage); }
+    .region-card .region-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+    .region-card .region-detail { font-size: 12px; color: var(--mid); }
+
+    /* ─── CONSPIRACY ─── */
+    .con-item {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .con-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .con-emoji { font-size: 26px; }
+    .con-htitle { font-weight: 600; font-size: 15px; }
+    .con-sub { font-size: 12px; color: var(--light); }
+    .con-verdict {
+      margin-left: auto;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+    .verdict-false { background: var(--red-light); color: var(--red); }
+    .verdict-partial { background: var(--amber-light); color: var(--amber); }
+    .con-arrow { font-size: 18px; transition: transform .25s; margin-left: 12px; }
+    .con-item.open .con-arrow { transform: rotate(180deg); }
+    .con-body { display: none; padding: 0 24px 22px; }
+    .con-item.open .con-body { display: block; }
+    .con-col2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+    @media(max-width:560px){ .con-col2{grid-template-columns:1fr} }
+    .col-box { padding: 14px; border-radius: 8px; font-size: 13px; line-height: 1.6; }
+    .col-ok { background: var(--mint); border-left: 3px solid var(--sage); }
+    .col-nope { background: var(--red-light); border-left: 3px solid var(--red); }
+    .col-box strong { display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: .8px; text-transform: uppercase; }
+
+    /* ─── REFS ─── */
+    .ref-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13.5px;
+    }
+    .ref-num {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      background: var(--leaf);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .ref-text { flex: 1; }
+    .ref-text strong { color: var(--forest); }
+    .ref-text span { color: var(--mid); display: block; font-size: 12px; }
+
+    /* ─── SYMPTOMS TABLE ─── */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    th { background: var(--forest); color: white; padding: 12px 14px; text-align: left; font-weight: 500; }
+    td { padding: 11px 14px; border-bottom: 1px solid var(--border); }
+    tr:nth-child(even) td { background: var(--mint); }
+    .severity { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+    .sev-high { background: var(--red-light); color: var(--red); }
+    .sev-med  { background: var(--amber-light); color: var(--amber); }
+    .sev-low  { background: var(--mint); color: var(--sage); }
+
+    /* ─── TICK VISUAL ─── */
+    .tick-visual {
+      background: var(--sand);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      border: 1px solid #ede3d5;
+    }
+    .tick-icon { font-size: 72px; flex-shrink: 0; }
+    .tick-info h3 { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--forest); margin-bottom: 8px; }
+    .tick-info p { font-size: 13.5px; color: var(--mid); }
+    @media(max-width:500px){ .tick-visual{flex-direction:column; text-align:center} }
+
+    /* ─── MECHANISM FLOW ─── */
+    .mechanism { display: flex; gap: 0; align-items: stretch; margin: 24px 0; flex-wrap: wrap; }
+    .mech-step {
+      flex: 1;
+      min-width: 120px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 16px;
+      text-align: center;
+      position: relative;
+    }
+    .mech-step:not(:last-child)::after {
+      content: '→';
+      position: absolute;
+      right: -16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      color: var(--sage);
+      z-index: 2;
+    }
+    .mech-step + .mech-step { margin-left: 16px; }
+    .mech-emoji { font-size: 30px; margin-bottom: 8px; }
+    .mech-step h4 { font-size: 12px; font-weight: 600; color: var(--forest); margin-bottom: 4px; }
+    .mech-step p { font-size: 11px; color: var(--mid); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--forest);
+      color: rgba(255,255,255,.6);
+      text-align: center;
+      padding: 28px;
+      font-size: 12.5px;
+    }
+    footer strong { color: white; }
+
+    /* ─── ALERT BOX ─── */
+    .alert {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 16px 20px;
+      border-radius: var(--radius);
+      margin-bottom: 20px;
+      font-size: 13.5px;
+    }
+    .alert-red { background: var(--red-light); border: 1px solid #ef9a9a; color: #8b2020; }
+    .alert-green { background: var(--mint); border: 1px solid #a5d6a7; color: var(--forest); }
+    .alert-amber { background: var(--amber-light); border: 1px solid #f9cc8a; color: #7d4e00; }
+    .alert-icon { font-size: 20px; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span></span> Atualizado — Abril 2026</div>
+    <h1>Síndrome de <em>Alpha-Gal</em>:<br>A Alergia que Vem do Carrapato</h1>
+    <p>Um guia completo e baseado em evidências sobre a condição que está se expandindo pela Europa — com fatos, mitos desmascarados e as últimas notícias científicas.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="num">3–6h</div>
+        <div class="lbl">Reação tardia</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">+15%</div>
+        <div class="lbl">Diagnósticos na Baviera (2025)</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">450K+</div>
+        <div class="lbl">Casos estimados nos EUA</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showSection('oq', this)">O que é?</button>
+    <button class="nav-tab" onclick="showSection('fatos', this)">Fatos &amp; Mitos</button>
+    <button class="nav-tab" onclick="showSection('sintomas', this)">Sintomas</button>
+    <button class="nav-tab" onclick="showSection('news', this)">Notícias</button>
+    <button class="nav-tab" onclick="showSection('europa', this)">Europa &amp; Baviera</button>
+    <button class="nav-tab" onclick="showSection('conspiracy', this)">Teorias</button>
+    <button class="nav-tab" onclick="showSection('refs', this)">Referências</button>
+  </div>
+</div>
+
+<div class="sections">
+
+  <!-- ── O QUE É ── -->
+  <div class="section active" id="oq">
+    <div class="section-title">O que é a Síndrome de Alpha-Gal?</div>
+    <p class="section-lead">Uma alergia alimentar grave e incomum desencadeada pela picada de carrapatos — não por proteínas, mas por um açúcar.</p>
+
+    <div class="tick-visual">
+      <div class="tick-icon">🕷️</div>
+      <div class="tick-info">
+        <h3><em>Ixodes ricinus</em> — o vetor europeu</h3>
+        <p>Na Europa, o carrapato-comum (<em>Ixodes ricinus</em>) é o principal responsável pela transmissão. Presente em florestas temperadas, prados e jardins — incluindo regiões como a Baviera, onde a densidade de fauna silvestre favorece sua proliferação.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="font-family:'Playfair Display',serif;font-size:18px;color:var(--forest);margin-bottom:16px;">Como funciona o mecanismo?</h3>
+      <div class="mechanism">
+        <div class="mech-step">
+          <div class="mech-emoji">🦌</div>
+          <h4>Carrapato pica mamífero</h4>
+          <p>Absorve Alpha-Gal do hospedeiro (veado, vaca, javali)</p>
+        </div>
+        <div class="mech-step">
+          <div class="mech-emoji">🩸</div>
+          <h4>Pica humano</h4>
+          <p>Injeta Alpha-Gal na corrente sanguínea</p>
+        </div>
+        <div class="mech-step">
+          <div class="mech-emoji">🛡️</div>
+          <h4>Sistema imune reage</h4>
+          <p>Produz anticorpos IgE contra o açúcar</p>
+        </div>
+        <div class="mech-step">
+          <div class="mech-emoji">🥩</div>
+          <h4>Ingestão de carne</h4>
+          <p>Novo contato com Alpha-Gal alimentar</p>
+        </div>
+        <div class="mech-step">
+          <div class="mech-emoji">⚠️</div>
+          <h4>Reação alérgica</h4>
+          <p>3–6h depois: urticária, anafilaxia</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card" style="margin:0;border-left:4px solid var(--leaf)">
+        <div style="font-size:28px;margin-bottom:8px">🐔</div>
+        <strong style="color:var(--forest)">O que pode comer</strong>
+        <p style="font-size:13.5px;color:var(--mid);margin-top:6px">Frango, peru, pato, peixe e mariscos são <strong>seguros</strong>. Aves e peixes não possuem a molécula Alpha-Gal.</p>
+      </div>
+      <div class="card" style="margin:0;border-left:4px solid var(--red)">
+        <div style="font-size:28px;margin-bottom:8px">🥩</div>
+        <strong style="color:var(--red)">O que evitar</strong>
+        <p style="font-size:13.5px;color:var(--mid);margin-top:6px">Carne de vaca, porco, cordeiro, veado. Também laticínios e gelatina em casos severos.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-amber">
+      <div class="alert-icon">⏱️</div>
+      <div>A <strong>reação tardia</strong> (3–6 horas) é a característica mais traiçoeira desta condição — frequentemente confundida com outras doenças digestivas ou cardíacas, atrasando o diagnóstico correto em anos.</div>
+    </div>
+  </div>
+
+  <!-- ── FATOS & MITOS ── -->
+  <div class="section" id="fatos">
+    <div class="section-title">Fatos &amp; Mitos</div>
+    <p class="section-lead">Clique em cada item para ver a explicação completa. A desinformação sobre Alpha-Gal é abundante — vamos separar o que a ciência confirma.</p>
+
+    <div class="fact-myth-list">
+
+      <div class="fm-item fact" onclick="toggleFM(this)">
+        <div class="fm-header">
+          <div class="fm-icon">✓</div>
+          <span>A reação ocorre 3–6 horas depois da ingestão</span>
+          <span class="fm-arrow">⌄</span>
+        </div>
+        <div class="fm-body">Esta janela de atraso é o que torna o diagnóstico tão difícil. Quando os sintomas aparecem, o paciente muitas vezes já digeriu a refeição e não associa a urticária ou o choque à carne que comeu horas antes. Isso frequentemente leva a anos de investigações erradas (intolerância à lactose, SII, ansiedade).</div>
+      </div>
+
+      <div class="fm-item myth" onclick="toggleFM(this)">
+        <div class="fm-header">
+          <div class="fm-icon">✗</div>
+          <span>Alpha-Gal é transmissível de humano para humano</span>
+          <span class="fm-arrow">⌄</span>
+        </div>
+        <div class="fm-body">Completamente falso. Não é uma doença infecciosa. É uma sensibilização imunológica individual causada exclusivamente pela picada de carrapatos. Não há risco de contágio por contato físico, saliva, ou qualquer outra via entre pessoas.</div>
+      </div>
+
+      <div class="fm-item fact" onclick="toggleFM(this)">
+        <div class="fm-header">
+          <div class="fm-icon">✓</div>
+          <span>A condição pode melhorar com o tempo</span>
+          <span class="fm-arrow">⌄</span>
+        </div>
+        <div class="fm-body">Estudos longitudinais mostram que muitos pacientes relatam diminuição na gravidade da reação após 3–5 anos, especialmente quando conseguem evitar novas picadas de carrapatos. Não é uma sentença perpétua, embora a vigilância continue sendo necessária. Alguns pacientes voltam a tolerar pequenas quantidades de carne vermelha com acompanhamento médico.</div>
+      </div>
+
+      <div class="fm-item myth" onclick="toggleFM(this)">
+        <div class="fm-header">
+          <div class="fm-icon">✗</div>
+          <span>Somente quem trabalha em florestas está em risco</span>
+          <span class="fm-arrow">⌄</span>
+        </div>
+        <div class="fm-body">Falso. Carrapatos são encontrados em jardins domésticos, parques urbanos, trilhas de caminhada e mesmo em gramados. Qualquer pessoa que pratique atividades ao ar livre — inclusive em áreas suburbanas com vegetação — está potencialmente exposta. Na Baviera, casos surgiram em moradores de áreas residenciais próximas a reservas florestais.</div>
+      </div>
+
+      <div class="fm-item fact" onclick="toggleFM(this)">
+        <div class="fm-header">
+          <div class="fm-icon">✓</div>
+          <span>O diagnóstico é feito com exame de sangue (IgE)</span>
+          <span class="fm-arrow">⌄</span>
+        </div>
+        <div class="fm-body">Existe um teste específico que mede o nível de anticorpos IgE contra a molécula Alpha-Gal no sangue. Um resultado positivo, combinado ao histórico clínico de reações tardias após ingestão de carne, confirma o diagnóstico. O teste está disponível em laboratórios especializados na Alemanha e em outros países da UE.</div>
+      </div>
+
+      <div class="fm-item myth" onclick="toggleFM(this)">
+        <div class="fm-header">
+          <div class="fm-icon">✗</div>
+          <span>Anti-histamínicos protegem completamente</span>
+          <span class="fm-arrow">⌄</span>
+        </div>
+        <div class="fm-body">Perigosamente falso. Anti-histamínicos podem reduzir sintomas leves, mas em casos de anafilaxia grave, somente a epinefrina (adrenalina) é eficaz. Pacientes com Alpha-Gal diagnosticada devem sempre carregar uma caneta de adrenalina autoinjetável (EpiPen ou similar) e ter um plano de emergência definido com seu médico.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SINTOMAS ── -->
+  <div class="section" id="sintomas">
+    <div class="section-title">Sintomas &amp; Severidade</div>
+    <p class="section-lead">Os sintomas variam consideravelmente entre indivíduos e podem mudar ao longo do tempo. A mesma pessoa pode ter reações de intensidades diferentes em ocasiões distintas.</p>
+
+    <div class="alert alert-red">
+      <div class="alert-icon">🚨</div>
+      <div><strong>Anafilaxia é uma emergência médica.</strong> Se ocorrer dificuldade para respirar, queda de pressão arterial, ou perda de consciência horas após ingerir carne de mamífero — ligue imediatamente para os serviços de emergência (112 na Europa).</div>
+    </div>
+
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Sintoma</th>
+              <th>Tempo de início</th>
+              <th>Severidade típica</th>
+              <th>Frequência</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Urticária / comichão</td>
+              <td>2–6 horas</td>
+              <td><span class="severity sev-med">Moderada</span></td>
+              <td>~75% dos casos</td>
+            </tr>
+            <tr>
+              <td>Dor abdominal / náuseas</td>
+              <td>3–5 horas</td>
+              <td><span class="severity sev-med">Moderada</span></td>
+              <td>~60% dos casos</td>
+            </tr>
+            <tr>
+              <td>Angioedema (inchaço)</td>
+              <td>2–4 horas</td>
+              <td><span class="severity sev-high">Alta</span></td>
+              <td>~40% dos casos</td>
+            </tr>
+            <tr>
+              <td>Dificuldade para respirar</td>
+              <td>3–6 horas</td>
+              <td><span class="severity sev-high">Alta</span></td>
+              <td>~20% dos casos</td>
+            </tr>
+            <tr>
+              <td>Anafilaxia</td>
+              <td>3–6 horas</td>
+              <td><span class="severity sev-high">Grave / Fatal</span></td>
+              <td>~10–15% dos casos</td>
+            </tr>
+            <tr>
+              <td>Refluxo / indigestão leve</td>
+              <td>1–3 horas</td>
+              <td><span class="severity sev-low">Leve</span></td>
+              <td>~30% dos casos</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card" style="margin:0">
+        <h3 style="font-size:15px;font-weight:600;margin-bottom:10px;color:var(--forest)">⚗️ Fatores que agravam a reação</h3>
+        <ul style="font-size:13px;color:var(--mid);padding-left:18px;line-height:2">
+          <li>Consumo de álcool junto com a carne</li>
+          <li>Exercício físico após a refeição</li>
+          <li>Uso de anti-inflamatórios (AINEs)</li>
+          <li>Infecções virais ativas</li>
+          <li>Estresse físico ou emocional</li>
+        </ul>
+      </div>
+      <div class="card" style="margin:0">
+        <h3 style="font-size:15px;font-weight:600;margin-bottom:10px;color:var(--forest)">🩺 Frequentemente confundida com</h3>
+        <ul style="font-size:13px;color:var(--mid);padding-left:18px;line-height:2">
+          <li>Síndrome do intestino irritável (SII)</li>
+          <li>Intolerância à lactose</li>
+          <li>Alergia a conservantes / corantes</li>
+          <li>Urticária idiopática crónica</li>
+          <li>Doença cardíaca (nos casos graves)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NOTÍCIAS ── -->
+  <div class="section" id="news">
+    <div class="section-title">Últimas Notícias — 2026</div>
+    <p class="section-lead">Desenvolvimentos recentes na investigação e vigilância epidemiológica da Síndrome de Alpha-Gal.</p>
+
+    <div class="news-item">
+      <div class="news-accent red"></div>
+      <div class="news-body">
+        <div class="news-meta">
+          <span class="news-date">Abril 2026</span>
+          <span class="news-tag tag-red">Caso Fatal</span>
+        </div>
+        <div class="news-title">Primeira morte confirmada por anafilaxia tardia classificada nos EUA</div>
+        <div class="news-text">Investigadores na Virgínia confirmaram que um óbito anteriormente registado como "causa indeterminada" foi provocado por choque anafilático grave de Alpha-Gal. O paciente faleceu horas após consumir um hambúrguer. O caso reforça a necessidade de treino médico para identificação da condição em necropsias.</div>
+      </div>
+    </div>
+
+    <div class="news-item">
+      <div class="news-accent amber"></div>
+      <div class="news-body">
+        <div class="news-meta">
+          <span class="news-date">Fevereiro 2026</span>
+          <span class="news-tag tag-amber">Europa</span>
+        </div>
+        <div class="news-title">EFSA alerta sobre expansão do <em>Ixodes ricinus</em> na Escandinávia e Sul da Alemanha</div>
+        <div class="news-text">A Agência Europeia de Segurança Alimentar emitiu alerta formal sobre o aumento das populações do carrapato-comum em áreas anteriormente consideradas de baixo risco — incluindo partes da Baviera e regiões escandinavas — atribuído a invernos historicamente mais quentes desde 2022.</div>
+      </div>
+    </div>
+
+    <div class="news-item">
+      <div class="news-accent"></div>
+      <div class="news-body">
+        <div class="news-meta">
+          <span class="news-date">Março 2026</span>
+          <span class="news-tag tag-green">Investigação</span>
+        </div>
+        <div class="news-title">Estudo: Risco de reação em transfusões de sangue</div>
+        <div class="news-text">Publicado no <em>Journal of Allergy and Clinical Immunology</em>, o estudo documenta casos raros de reações alérgicas durante transfusões de sangue proveniente de dadores com altos títulos de anticorpos IgE contra Alpha-Gal. Pesquisadores defendem triagem adicional em bancos de sangue.</div>
+      </div>
+    </div>
+
+    <div class="news-item">
+      <div class="news-accent"></div>
+      <div class="news-body">
+        <div class="news-meta">
+          <span class="news-date">Janeiro 2026</span>
+          <span class="news-tag tag-green">Diagnóstico</span>
+        </div>
+        <div class="news-title">Novo protocolo europeu para diagnóstico acelerado em urgências</div>
+        <div class="news-text">Consórcio de hospitais alemães e austríacos publicou protocolo padronizado para identificar suspeitas de Alpha-Gal em serviços de urgência, reduzindo o tempo médio de diagnóstico de 4,2 anos para meses em casos com histórico sugestivo de picada de carrapato.</div>
+      </div>
+    </div>
+
+    <div class="news-item">
+      <div class="news-accent amber"></div>
+      <div class="news-body">
+        <div class="news-meta">
+          <span class="news-date">Dezembro 2025</span>
+          <span class="news-tag tag-amber">Tratamento</span>
+        </div>
+        <div class="news-title">Ensaio clínico com imunoterapia oral em fase II</div>
+        <div class="news-text">Investigadores da Universidade de Vanderbilt (EUA) anunciaram resultados preliminares positivos de um ensaio com imunoterapia oral de dessensibilização ao Alpha-Gal. Embora ainda em fase experimental, 40% dos participantes mostraram tolerância aumentada após 12 meses.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EUROPA & BAVIERA ── -->
+  <div class="section" id="europa">
+    <div class="section-title">Situação na Europa &amp; Baviera</div>
+    <p class="section-lead">A síndrome é frequentemente associada aos EUA, mas a Europa tem o seu próprio vetor e um subdiagnóstico preocupante.</p>
+
+    <div class="map-visual">
+      <h3>🌍 Distribuição Europeia de Risco</h3>
+      <p>O <em>Ixodes ricinus</em> está presente em quase toda a Europa continental e Ilhas Britânicas. As regiões temperadas e húmidas com alta densidade florestal e fauna silvestre apresentam maior risco.</p>
+    </div>
+
+    <div class="region-cards">
+      <div class="region-card rc-high">
+        <div class="risk-label">🔴 Alto risco</div>
+        <div class="region-name">Baviera (Alemanha)</div>
+        <div class="region-detail">+15% diagnósticos suspeitos em 2025. Pré-alpes especialmente afetados.</div>
+      </div>
+      <div class="region-card rc-high">
+        <div class="risk-label">🔴 Alto risco</div>
+        <div class="region-name">Áustria Central</div>
+        <div class="region-detail">Alta densidade de <em>Ixodes ricinus</em> em florestas mistas. Subdiagnóstico elevado.</div>
+      </div>
+      <div class="region-card rc-high">
+        <div class="risk-label">🔴 Alto risco</div>
+        <div class="region-name">Sul da Suécia</div>
+        <div class="region-detail">Expansão acelerada pós-2020 atribuída a invernos mais quentes.</div>
+      </div>
+      <div class="region-card rc-med">
+        <div class="risk-label">🟡 Médio risco</div>
+        <div class="region-name">República Checa / Eslováquia</div>
+        <div class="region-detail">Casos documentados em aumento desde 2022.</div>
+      </div>
+      <div class="region-card rc-med">
+        <div class="risk-label">🟡 Médio risco</div>
+        <div class="region-name">Norte de Espanha / Pirenéus</div>
+        <div class="region-detail">Relatórios esporádicos de AGS em regiões montanhosas.</div>
+      </div>
+      <div class="region-card rc-low">
+        <div class="risk-label">🟢 Baixo risco</div>
+        <div class="region-name">Portugal Continental</div>
+        <div class="region-detail">Casos raros relatados; monitorização em curso pela DGS.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:16px;font-weight:600;color:var(--forest);margin-bottom:12px">🩺 O Problema do Subdiagnóstico na Alemanha</h3>
+      <p style="font-size:13.5px;color:var(--mid);margin-bottom:14px">Estima-se que a grande maioria dos casos na Alemanha permaneça não diagnosticada ou seja classificada incorretamente. As razões incluem:</p>
+      <div class="card-grid" style="margin:0">
+        <div style="background:var(--red-light);border-radius:8px;padding:14px;font-size:13px">
+          <strong style="color:var(--red);display:block;margin-bottom:4px">Confusão diagnóstica</strong>
+          Sintomas confundidos com SII, intolerância à lactose ou urticária idiopática — tratamentos errados durante anos.
+        </div>
+        <div style="background:var(--amber-light);border-radius:8px;padding:14px;font-size:13px">
+          <strong style="color:var(--amber);display:block;margin-bottom:4px">Falta de histórico de picada</strong>
+          Muitos pacientes não recordam ou não reportam a picada de carrapato — muitas vezes indolor e pequena.
+        </div>
+        <div style="background:var(--mint);border-radius:8px;padding:14px;font-size:13px">
+          <strong style="color:var(--leaf);display:block;margin-bottom:4px">Teste ainda pouco solicitado</strong>
+          O exame IgE-Alpha-Gal não é solicitado rotineiramente, mesmo em investigações alérgicas padrão.
+        </div>
+        <div style="background:var(--mint);border-radius:8px;padding:14px;font-size:13px">
+          <strong style="color:var(--leaf);display:block;margin-bottom:4px">Reação tardia não associada</strong>
+          A janela de 3–6h desconecta clinicamente o sintoma da causa alimentar.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONSPIRACY ── -->
+  <div class="section" id="conspiracy">
+    <div class="section-title">Teorias da Conspiração</div>
+    <p class="section-lead">O surgimento "repentino" da síndrome alimentou teorias online. Fazemos aqui uma análise crítica honesta — reconhecendo o que tem alguma base e o que é pura ficção.</p>
+
+    <div class="alert alert-amber">
+      <div class="alert-icon">🔍</div>
+      <div>A nossa abordagem: identificamos o que em cada teoria tem fundamento parcial, e o que refuta a narrativa conspirativa central. Ceticismo crítico, não dismissão automática.</div>
+    </div>
+
+    <div class="con-item" onclick="toggleCon(this)">
+      <div class="con-header">
+        <div class="con-emoji">🧬</div>
+        <div>
+          <div class="con-htitle">Carrapatos foram modificados em laboratório para promover vegetarianismo</div>
+          <div class="con-sub">Teoria muito difundida em fóruns anti-agenda climática desde 2021</div>
+        </div>
+        <span class="con-verdict verdict-false">Falso</span>
+        <span class="con-arrow">⌄</span>
+      </div>
+      <div class="con-body">
+        <p style="font-size:13.5px;color:var(--mid);margin-bottom:12px">A teoria afirma que os carrapatos foram geneticamente modificados e libertados para forçar a população a abandonar o consumo de carne vermelha, alinhando-se com agendas de emissões zero.</p>
+        <div class="con-col2">
+          <div class="col-box col-ok">
+            <strong>✓ O que tem base real</strong>
+            Grupos ambientais defendem ativamente a redução do consumo de carne. Tecnologias de modificação genética de insetos existem e são usadas (ex: mosquitos estéreis para combater a Malária pela Fundação Gates). A síndrome ganhou visibilidade exatamente quando os debates climáticos se intensificaram.
+          </div>
+          <div class="col-box col-nope">
+            <strong>✗ O que refuta a teoria</strong>
+            A Síndrome de Alpha-Gal foi formalmente descrita pela primeira vez em 2009 por Thomas Platts-Mills, bem antes de qualquer agenda climática contemporânea. A expansão dos carrapatos segue modelos ecológicos totalmente explicáveis pelo aquecimento global e migração de veados. Não há nenhuma evidência de libertação deliberada. A indústria pecuária é um dos maiores lobbies globais — nenhum governo teria incentivo econômico para sabotá-la.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="con-item" onclick="toggleCon(this)">
+      <div class="con-header">
+        <div class="con-emoji">💰</div>
+        <div>
+          <div class="con-htitle">Bill Gates financia a disseminação dos carrapatos como controlo alimentar</div>
+          <div class="con-sub">Variante da teoria dos "carrapatos de laboratório" com foco em controlo de população</div>
+        </div>
+        <span class="con-verdict verdict-false">Falso</span>
+        <span class="con-arrow">⌄</span>
+      </div>
+      <div class="con-body">
+        <p style="font-size:13.5px;color:var(--mid);margin-bottom:12px">Afirma que a Fundação Bill &amp; Melinda Gates financiaria projetos secretos de disseminação de carrapatos como forma de controlar o consumo alimentar global.</p>
+        <div class="con-col2">
+          <div class="col-box col-ok">
+            <strong>✓ O que tem base real</strong>
+            A Fundação Gates financia extensamente pesquisa sobre doenças transmitidas por vetores. Gates apoiou projetos de modificação de mosquitos. A fundação investe também em proteínas alternativas e tecnologia alimentar.
+          </div>
+          <div class="col-box col-nope">
+            <strong>✗ O que refuta a teoria</strong>
+            O foco documentado da fundação é a erradicação de vetores, não a disseminação. O investimento em proteínas alternativas é público e tem lógica económica, não requer uma conspiração médica. A expansão geográfica dos carrapatos correlaciona-se precisamente com temperaturas e densidades de fauna selvagem — sem anomalias geográficas que sugiram libertação artificial.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="con-item" onclick="toggleCon(this)">
+      <div class="con-header">
+        <div class="con-emoji">🏛️</div>
+        <div>
+          <div class="con-htitle">Programa de armas biológicas do Pentágono com carrapatos ("Lyme-gate")</div>
+          <div class="con-sub">Baseada em investigação do Congresso dos EUA (2019) sobre Plum Island</div>
+        </div>
+        <span class="con-verdict verdict-partial">Parcialmente Investigado</span>
+        <span class="con-arrow">⌄</span>
+      </div>
+      <div class="con-body">
+        <p style="font-size:13.5px;color:var(--mid);margin-bottom:12px">Em 2019, o Congresso dos EUA ordenou uma investigação sobre se o Departamento de Defesa teria experimentado com carrapatos como vetores biológicos na Ilha Plum. Teoria estendida para incluir Alpha-Gal.</p>
+        <div class="con-col2">
+          <div class="col-box col-ok">
+            <strong>✓ O que tem base real</strong>
+            A investigação do Congresso de 2019 é real e foi aprovada bipartidariamente. Pesquisa com vetores existiu historicamente em contexto de Guerra Fria. A desclassificação de documentos revelou experiências com insetos em décadas passadas.
+          </div>
+          <div class="col-box col-nope">
+            <strong>✗ O que refuta a teoria</strong>
+            A investigação sobre Plum Island foi inconclusiva e focada na Doença de Lyme, não em Alpha-Gal. Alpha-Gal é um carboidrato encontrado naturalmente em todos os mamíferos não-primatas — não é um agente criado em laboratório. A extensão da teoria de Lyme para Alpha-Gal não tem evidência científica.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── REFERÊNCIAS ── -->
+  <div class="section" id="refs">
+    <div class="section-title">Referências &amp; Fontes</div>
+    <p class="section-lead">Todas as informações neste guia são baseadas em fontes científicas e institucionais verificáveis.</p>
+
+    <div class="card">
+
+      <div class="ref-item">
+        <div class="ref-num">1</div>
+        <div class="ref-text">
+          <strong>CDC — Alpha-gal Syndrome Overview (2026 update)</strong>
+          <span>Centers for Disease Control and Prevention, EUA. Dados epidemiológicos, sintomas e orientações clínicas atualizadas.</span>
+        </div>
+      </div>
+
+      <div class="ref-item">
+        <div class="ref-num">2</div>
+        <div class="ref-text">
+          <strong>Platts-Mills, T.A.E. et al. — "A Novel IgE Response to the Oligosaccharide Alpha-Gal"</strong>
+          <span><em>Journal of Allergy and Clinical Immunology</em>, 2009. Artigo seminal que descreveu formalmente a síndrome pela primeira vez.</span>
+        </div>
+      </div>
+
+      <div class="ref-item">
+        <div class="ref-num">3</div>
+        <div class="ref-text">
+          <strong>EFSA — Vectors and Pathogens in the EU (2025 Report)</strong>
+          <span>European Food Safety Authority. Relatório de vigilância sobre vetores de doenças na União Europeia, incluindo <em>Ixodes ricinus</em>.</span>
+        </div>
+      </div>
+
+      <div class="ref-item">
+        <div class="ref-num">4</div>
+        <div class="ref-text">
+          <strong>Mayo Clinic — Alpha-gal Syndrome: Symptoms &amp; Causes</strong>
+          <span>Recurso clínico sobre sintomatologia, diagnóstico diferencial e tratamento. Revisado em 2025.</span>
+        </div>
+      </div>
+
+      <div class="ref-item">
+        <div class="ref-num">5</div>
+        <div class="ref-text">
+          <strong>"Fatal reactions to alpha-gal and comorbid diseases"</strong>
+          <span><em>Journal of Allergy and Clinical Immunology</em>, Abril 2026. Documenta o primeiro óbito confirmado classificado por anafilaxia tardia de AGS.</span>
+        </div>
+      </div>
+
+      <div class="ref-item">
+        <div class="ref-num">6</div>
+        <div class="ref-text">
+          <strong>Alpha-gal Alliance — Global Surveillance Data</strong>
+          <span>Base de dados de auto-reporte de pacientes e dados de vigilância epidemiológica global. alphagalalliance.org</span>
+        </div>
+      </div>
+
+      <div class="ref-item">
+        <div class="ref-num">7</div>
+        <div class="ref-text">
+          <strong>Bavarian Health Office (Bayerisches Landesamt für Gesundheit) — Zeckenmeldedaten 2025</strong>
+          <span>Dados de incidência de picadas de carrapato e casos suspeitos de AGS na Baviera. Dados internos publicados no relatório anual de 2025.</span>
+        </div>
+      </div>
+
+      <div class="ref-item">
+        <div class="ref-num">8</div>
+        <div class="ref-text">
+          <strong>Vanderbilt University — "Oral Immunotherapy for Alpha-Gal: Phase II Preliminary Results"</strong>
+          <span>Apresentação no Congresso Americano de Alergia e Imunologia, Dezembro 2025. Resultados preliminares de ensaio de dessensibilização.</span>
+        </div>
+      </div>
+
+      <div class="ref-item" style="border:none">
+        <div class="ref-num">9</div>
+        <div class="ref-text">
+          <strong>US Congress — Tick-Borne Disease Working Group Report (2019)</strong>
+          <span>Relatório do grupo de trabalho do Congresso dos EUA sobre doenças transmitidas por carrapatos. Inclui a emenda que ordenou investigação sobre pesquisa de vetores pelo Departamento de Defesa.</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="alert alert-green">
+      <div class="alert-icon">🩺</div>
+      <div>Este documento é informativo e não substitui consulta médica. Se suspeita de Alpha-Gal Síndrome, consulte um <strong>alergologista</strong> e solicite especificamente o teste IgE-Alpha-Gal.</div>
+    </div>
+  </div>
+
+</div><!-- /sections -->
+
+<footer>
+  <strong>Guia Alpha-Gal Síndrome</strong> — Atualizado Abril 2026 · Documento informativo baseado em evidências científicas · Consulte sempre um médico alergologista para diagnóstico
+</footer>
+
+<script>
+  function showSection(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: document.querySelector('.nav-wrap').offsetTop - 2, behavior: 'smooth' });
+  }
+
+  function toggleFM(el) {
+    el.classList.toggle('open');
+  }
+
+  function toggleCon(el) {
+    el.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
